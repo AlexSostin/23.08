@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Pets</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            text-align: center;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+            padding: 15px 0;
+            margin-bottom: 15px;
+        }
+        img {
+            max-width: 150px;
+            height: auto;
+            border-radius: 8px;
+            margin-right: 20px;
+        }
+        .pet-info {
+            flex: 1;
+        }
+        .pet-info a {
+            text-decoration: none;
+            font-size: 1.2em;
+            color: #3498db;
+            transition: color 0.3s;
+        }
+        .pet-info a:hover {
+            color: #2980b9;
+        }
+        .pet-info p {
+            margin: 5px 0;
+        }
+        .form-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .form-container form {
+            margin: 10px 0;
+        }
+        .form-container input, .form-container button {
+            padding: 10px;
+            margin: 5px;
+            font-size: 1em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>All Pets</h1>
+        <ul>
+            {% for pet in pets %}
+            <li>
+                <img src="{{ pet.picture_url }}" alt="{{ pet.name }}">
+                <div class="pet-info">
+                    <a href="/pets/{{ pet.id }}/details">{{ pet.name }}</a>
+                    <p>Age: {{ pet.age }}</p>
+                </div>
+                <form action="/pets/{{ pet.id }}" method="post" style="display:inline;">
+                    <input type="hidden" name="action" value="delete">
+                    <button type="submit">Delete</button>
+                </form>
+            </li>
+            {% endfor %}
+        </ul>
+        <div class="form-container">
+            <h2>Add a New Pet</h2>
+            <form action="/pets" method="post">
+                <input type="number" name="id" placeholder="ID" required>
+                <input type="text" name="name" placeholder="Name" required>
+                <input type="number" name="age" placeholder="Age" required>
+                <input type="text" name="picture_url" placeholder="Picture URL" required>
+                <button type="submit">Add Pet</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
